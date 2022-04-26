@@ -13,7 +13,7 @@ Text Domain:  ceoJuice-api
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 18:51:27
+ * @Last Modified time: 2022-04-26 18:54:30
  * @requires: PHP 7.3+
  * @requires: WP 5.9.0+
  * @requires: ID230 and ID125 on the CeoJuice API
@@ -39,7 +39,16 @@ define('CJ_CACHE_UNIT_DEFAULT', 'seconds');
 require_once(dirname(__FILE__) . '/inc/globalfunctions.php');
 
 if (CJ_CACHE_ENABLED == 'true') {
-    require_once(dirname(__FILE__) . '/inc/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php');
+require_once(dirname(__FILE__) . '/inc/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php');
+use Phpfastcache\CacheManager;
+use Phpfastcache\Config\ConfigurationOption;
+
+// Setup File Path on your config files
+// Please note that as of the V6.1 the "path" config
+// can also be used for Unix sockets (Redis, Memcache, etc)
+CacheManager::setDefaultConfig(new ConfigurationOption([
+    'path' => CJ_PLUGIN_DIR . '/cache/phpfastcache/ceojuice-api-cache',
+]));
 }
 
 // Admin notice if the CEOJuice Customer Number and API codes are not set.
