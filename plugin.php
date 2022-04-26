@@ -13,7 +13,7 @@ Text Domain:  ceoJuice-api
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 16:39:19
+ * @Last Modified time: 2022-04-26 18:48:08
  * @requires: PHP 8.0+
  * @requires: WP 5.9.0+
  * @requires: ID230 and ID125 on the CeoJuice API
@@ -27,12 +27,25 @@ define('CJ_API_URL', 'https://www.ceojuice.com/api/');
 define('CJ_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('CJ_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('CJ_CACHE_DIR', CJ_PLUGIN_DIR . 'cache/');
+define('CJ_CUSTOMER_NUMBER', get_option('ceoJuice_custNum'));
+define('CJ_API_KEY', get_option('ceoJuice_apiCode'));
+define('CJ_CACHE_TIME', get_option('ceoJuice_cacheTime'));
+define('CJ_CACHE_ENABLED', get_option('ceoJuice_caching'));
+define('CJ_CACHE_TIME_DEFAULT', 3600);
+define('CJ_CACHE_TIME_MIN', 60);
+define('CJ_CACHE_TIME_MAX', 86400);
+define('CJ_CACHE_UNIT', get_option('ceoJuice_cacheUnit'));
+define('CJ_CACHE_UNIT_DEFAULT', 'seconds');
 require_once(dirname(__FILE__) . '/inc/globalfunctions.php');
 
+if (CJ_CACHE_ENABLED == 'true') {
+    require_once(dirname(__FILE__) . '/inc/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php');
+}
+
 // Admin notice if the CEOJuice Customer Number and API codes are not set.
-if (get_option('ceoJuice_custNum') != null and get_option('ceoJuice_apiKey') != null) { // If the CEOJuice Customer Number and API codes are set.
-    if (get_option('ceoJuice_custNum') != '' and get_option('ceoJuice_apiKey') != '') { // If the CEOJuice Customer Number and API codes are not empty.
-        if (get_option('ceoJuice_custNum') != 'ceo001') { // If the CEOJuice Customer Number is not set to ceo001.
+if (CJ_CUSTOMER_NUMBER != null and CJ_API_KEY != null) { // If the CEOJuice Customer Number and API codes are set.
+    if (CJ_CUSTOMER_NUMBER != '' and CJ_API_KEY != '') { // If the CEOJuice Customer Number and API codes are not empty.
+        if (CJ_CUSTOMER_NUMBER != 'ceo001') { // If the CEOJuice Customer Number is not set to ceo001.
             $isCeoJuiceApiConfigured = true;
         } else {
             $isCeoJuiceApiConfigured = false;
