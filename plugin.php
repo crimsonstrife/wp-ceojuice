@@ -2,17 +2,17 @@
 /*
 Plugin Name:  CEOJuice API Connector
 Plugin URI:   https://patrickbarnhardt.com/plugins/ceojuice-api
-Description:  Worpress Plugin for contacting the CeoJuice API to retrieve and display NPS data and Testimonials. Based on the theme feature I created for
+Description:  WorPress Plugin for contacting the CeoJuice API to retrieve and display NPS data and Testimonials. Based on the theme feature I created for Modern Impressions.
 Version:      1.0.0
 Author:       Patrick Barnhardt
 Author URI:   https://www.patrickbarnhardt.com
 License:      GPL3
-Text Domain:  ceojuice-api
+Text Domain:  ceoJuice-api
 
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 14:52:50
+ * @Last Modified time: 2022-04-26 15:00:43
  * @requires: PHP 8.0+
  * @requires: WP 5.9.0+
  * @requires: ID230 on the CeoJuice API
