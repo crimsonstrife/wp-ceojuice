@@ -13,14 +13,14 @@ Text Domain:  ceoJuice-api
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 18:48:08
- * @requires: PHP 8.0+
+ * @Last Modified time: 2022-04-26 18:51:27
+ * @requires: PHP 7.3+
  * @requires: WP 5.9.0+
  * @requires: ID230 and ID125 on the CeoJuice API
- * @requires: PHPfastCache 9.0.0+
+ * @requires: PHPfastCache 8.0.0+
 
 Requires PHPfastCache (included in this plugin)
-Requires PHP 8.0+ because of the PHPfastCache library
+Requires PHP 7.3+ because of the PHPfastCache library
 With caching disabled you may be able to run this plugin on lower versions of PHP, but this is untested.
 */
 define('CJ_API_URL', 'https://www.ceojuice.com/api/');
