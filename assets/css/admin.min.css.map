@@ -1,0 +1,8 @@
+{
+    "version": 3,
+    "sources": [
+        "admin.css"
+    ],
+    "names": [],
+    "mappings": "AAEA,YACC,MAAO,KACP,kBAAmB,UACnB,gBAAiB,KAAK,KAGvB,UACC,MAAO,eAGR,QACC,SAAU,SACV,QAAS,KACT,UAAW,KACX,YAAa,OACb,gBAAiB,cACjB,QAAS,MAAO,KAGjB,mBACC,MAAO,KACP,QAAS,KACT,UAAW,KACX,YAAa,OACb,gBAAiB,cAGlB,cACC,MAAO,KACP,QAAS,aACT,YAAa,SACb,eAAgB,SAChB,aAAc,KACd,UAAW,QACX,YAAa,QACb,YAAa"
+}
