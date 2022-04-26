@@ -6,13 +6,14 @@ Description:  WorPress Plugin for contacting the CeoJuice API to retrieve and di
 Version:      1.0.0
 Author:       Patrick Barnhardt
 Author URI:   https://www.patrickbarnhardt.com
+Repository URI: https://github.com/crimsonstrife/wp-ceojuice.git
 License:      GPL3
 Text Domain:  ceoJuice-api
 
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 15:00:43
+ * @Last Modified time: 2022-04-26 15:01:28
  * @requires: PHP 8.0+
  * @requires: WP 5.9.0+
  * @requires: ID230 on the CeoJuice API
