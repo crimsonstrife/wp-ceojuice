@@ -10,11 +10,10 @@ Author URI:   https://www.patrickbarnhardt.com
  * @Author: crimsonstrife
  * @Date: 2022-04-26 15:30:51
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 16:53:28
+ * @Last Modified time: 2022-04-26 18:43:30
 */
 
 // Settings Page: CEOJuice
-// Retrieving values: get_option( 'your_field_id' )
 class ceojuice_Settings_Page
 {
 
@@ -107,6 +106,29 @@ class ceojuice_Settings_Page
                         'placeholder' => 'false',
                         'default' => 'false',
                     ),
+                    array(
+                        'label' => 'Cache Duration',
+                        'id' => 'ceoJuice_cacheTime',
+                        'type' => 'number',
+                        'section' => 'ceojuice_section',
+                        'desc' => 'Set the amount here, and the time unit in the next field.',
+                        'placeholder' => '3600',
+                        'min' => '60',
+                        'max' => '86400',
+                    ),
+                    array(
+                        'label' => 'Cache Duration Unit',
+                        'id' => 'ceoJuice_cacheUnit',
+                        'type' => 'select',
+                        'section' => 'ceojuice_section',
+                        'options' => array(
+                            'seconds' => 'Seconds',
+                            'minutes' => 'Minutes',
+                            'hours' => 'Hours',
+                            'days' => 'Days',
+                        ),
+                        'placeholder' => 'Seconds',
+                    ),
                 );
                 foreach ($fields as $field) {
                     add_settings_field($field['id'], $field['label'], array($this, 'wph_field_callback'), 'ceojuice', $field['section'], $field);
@@ -141,6 +163,29 @@ class ceojuice_Settings_Page
                             printf(
                                 '<fieldset>%s</fieldset>',
                                 $options_markup
+                            );
+                        }
+                    case 'select':
+                    case 'multiselect':
+                        if (!empty($field['options']) && is_array($field['options'])) {
+                            $attr = '';
+                            $options = '';
+                            foreach ($field['options'] as $key => $label) {
+                                $options .= sprintf(
+                                    '<option value="%s" %s>%s</option>',
+                                    $key,
+                                    selected($value, $key, false),
+                                    $label
+                                );
+                            }
+                            if ($field['type'] === 'multiselect') {
+                                $attr = ' multiple="multiple" ';
+                            }
+                            printf(
+                                '<select name="%1$s" id="%1$s" %2$s>%3$s</select>',
+                                $field['id'],
+                                $attr,
+                                $options
                             );
                         }
                         break;
