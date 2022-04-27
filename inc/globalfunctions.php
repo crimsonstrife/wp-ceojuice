@@ -10,7 +10,7 @@ Author URI:   https://www.patrickbarnhardt.com
  * @Author: crimsonstrife
  * @Date: 2022-04-26 15:30:51
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 21:56:21
+ * @Last Modified time: 2022-04-26 22:27:06
 */
 
 // Settings Page: CEOJuice
@@ -76,16 +76,17 @@ class ceojuice_Settings_Page
                 settings_fields('ceojuice');
                 switch ($tab):
                     case 'features': ?>
-
-        <?php submit_button();
+        <h2>Enable CEOJuice API Features</h2>
+        <?php do_settings_fields('ceojuice', 'features_section');
+                        submit_button();
                         break;
                     case 'cache': ?>
-        <h2>Cache Settings</h2>
+        <h2>Set API Cache Settings</h2>
         <?php do_settings_fields('ceojuice', 'cache_section');
                         submit_button();
                         break;
                     default: ?>
-        <h2>API Settings</h2>
+        <h2>Set API Settings</h2>
         <?php do_settings_fields('ceojuice', 'ceojuice_section');
                         submit_button();
                         break;
@@ -97,6 +98,7 @@ class ceojuice_Settings_Page
     public function wph_setup_sections()
     {
         add_settings_section('ceojuice_section', 'Settings for the CEOJuice API', array(), 'ceojuice');
+        add_settings_section('features_section', 'Enable API Features', array(), 'ceojuice');
         add_settings_section('cache_section', 'Settings for the API Cache', array(), 'ceojuice');
     }
 
@@ -133,6 +135,32 @@ class ceojuice_Settings_Page
                 'default' => 'false',
             ),
             array(
+                'label' => 'Enable NetPromoterScore (NPS&#174;)',
+                'id' => 'ceoJuice_enableNPS',
+                'type' => 'select',
+                'section' => 'features_section',
+                'options' => array(
+                    'false' => 'Off',
+                    'true' => 'On',
+                ),
+                'desc' => 'Enable the NPS API feature',
+                'placeholder' => 'Off',
+                'default' => 'Off',
+            ),
+            array(
+                'label' => 'Enable Favorite Testimonials',
+                'id' => 'ceoJuice_enableTestimonials',
+                'type' => 'select',
+                'section' => 'features_section',
+                'options' => array(
+                    'false' => 'Off',
+                    'true' => 'On',
+                ),
+                'desc' => 'Enable Testimonials API feature - You need to favorite a testimonial to pull it from the API',
+                'placeholder' => 'Off',
+                'default' => 'Off',
+            ),
+            array(
                 'label' => 'Cache Duration',
                 'id' => 'ceoJuice_cacheTime',
                 'type' => 'number',
@@ -141,6 +169,7 @@ class ceojuice_Settings_Page
                 'placeholder' => '3600',
                 'min' => '60',
                 'max' => '86400',
+                'dependency' => 'ceoJuice_caching',
             ),
             array(
                 'label' => 'Cache Duration Unit',
@@ -154,6 +183,7 @@ class ceojuice_Settings_Page
                     'days' => 'Days',
                 ),
                 'placeholder' => 'Seconds',
+                'dependency' => 'ceoJuice_cacheTime',
             ),
         );
         foreach ($fields as $field) {
@@ -250,6 +280,18 @@ class ceojuice_Settings_Page
     }
 }
 new ceojuice_Settings_Page();
+
+function replace_footer_admin()
+{
+    echo '<span id="footer-thankyou">Thank you for creating with <a href="https://wordpress.org/">WordPress</a>.</span><br />';
+    echo '<span>This unofficial plugin was developed by Patrick Barnhardt. It is not affiliated or supported by CEO Juice Inc. or Satmetrix Systems, Inc.</span><br />';
+    echo '<span>CEOJUICE™ is a registered trademark of <a href="https://www.ceojuice.com/">CEO Juice Inc.</a></span><br />';
+    echo '<span>Net Promoter, NPS, and Net Promoter Score are trademarks of Satmetrix Systems, Inc., Bain & Company, and Fred Reichheld.</span><br />';
+}
+
+if ($pagenow == 'admin.php' && $_GET['page'] == 'ceojuice') {
+    add_filter('admin_footer_text', 'replace_footer_admin');
+}
 
 function add_apisettingslink_admin_submenu()
 {
