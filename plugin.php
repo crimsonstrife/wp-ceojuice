@@ -13,7 +13,7 @@ Text Domain:  ceoJuice-api
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 21:58:21
+ * @Last Modified time: 2022-04-26 23:13:17
  * @requires: PHP 7.3+
  * @requires: WP 5.9.0+
  * @requires: ID230 and ID125 on the CeoJuice API
@@ -42,19 +42,19 @@ define('CJ_CACHE_TIME_MIN', 60);
 define('CJ_CACHE_TIME_MAX', 86400);
 define('CJ_CACHE_UNIT', get_option('ceoJuice_cacheUnit'));
 define('CJ_CACHE_UNIT_DEFAULT', 'seconds');
-require_once(dirname(__FILE__) . '/inc/globalfunctions.php');
+require_once(CJ_PLUGIN_DIR . 'inc/globalfunctions.php');
 
 if (CJ_CACHE_ENABLED == 'true') {
     if (PHP_VERSION < 7.3) {
         add_action('admin_notices', 'show_ceoadmin_invalidphp');
         $InstanceCache = null;
     } else {
-        require_once(dirname(__FILE__) . '/inc/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php'); // Load PHPfastCache Autoloader
+        require_once(CJ_PLUGIN_DIR . 'inc/phpfastcache/lib/Phpfastcache/Autoload/Autoload.php'); // Load PHPfastCache Autoloader
         // Setup File Path
         // Please note that as of the V6.1 the "path" config
         // can also be used for Unix sockets (Redis, Memcache, etc)
         CacheManager::setDefaultConfig(new ConfigurationOption([
-            'path' => CJ_PLUGIN_DIR . '/cache/phpfastcache/ceojuice-api-cache',
+            'path' => CJ_PLUGIN_DIR . CJ_CACHE_DIR . 'phpfastcache/ceojuice-api-cache',
         ]));
         $InstanceCache = CacheManager::getInstance('files'); // Get the cache instance.
         if (CJ_CACHE_TIME_SET != null && CJ_CACHE_TIME_SET != '') {
