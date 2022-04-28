@@ -2,8 +2,8 @@
 /*
  * @Author: crimsonstrife
  * @Date: 2022-04-26 22:28:51
- * @Last Modified by:   crimsonstrife
- * @Last Modified time: 2022-04-26 22:28:51
+ * @Last Modified by: crimsonstrife
+ * @Last Modified time: 2022-04-27 09:04:52
  */
 
 #navWrapper {
@@ -121,4 +121,117 @@
 	font-size: 1.25rem;
 	line-height: inherit;
 	white-space: nowrap;
+}
+
+.howtobody {
+	display: inline-flex;
+	top: 0;
+	left: 0;
+	line-height: 1.5;
+}
+
+.howtobody header {
+	text-align: center;
+	margin: 10px;
+	font-size: 1.8em;
+	color: black;
+}
+
+#howtosidebar {
+	position: sticky;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 100%;
+	border-right: solid rgb(0, 22, 22, 0.4);
+}
+
+#howtosidebar ul {
+	height: 80%;
+	padding: 0;
+	text-align: center;
+}
+
+#howtosidebar li {
+	border-bottom: 1px solid black;
+	list-style: none;
+	padding: 10px;
+}
+
+#howtosidebar a {
+	color: black;
+	text-decoration: none;
+}
+
+/* ul {
+  text-align: center;
+  display: block;
+  list-style-type: disc;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  padding-inline-start: 40px;
+}*/
+
+.howtocontainer {
+	padding: 30px;
+	position: relative;
+}
+
+.main-sec {
+}
+
+.main-sec article {
+}
+
+.main-sec header h1,
+.main-sec h1 {
+	text-align: left;
+	margin-left: 0;
+	font-size: 1.25rem;
+	font-weight: bolder;
+}
+
+.main-sec article p,
+.main-sec p {
+	padding: 10px;
+}
+
+.main-sec article h3,
+.main-sec h3 {
+	padding: 10px;
+	font-size: 0.99rem;
+	font-weight: bold;
+}
+
+.main-sec article ul,
+.main-sec ul {
+	padding: 10px;
+	font-size: 1rem;
+}
+
+.main-sec article ul li,
+.main-sec ul li {
+	list-style: disc;
+	list-style-position: inside;
+	font-size: 1rem;
+}
+
+.main-sec article ol,
+.main-sec ol {
+	padding: 10px;
+	font-size: 1rem;
+}
+
+.main-sec article ol li,
+.main-sec ol li {
+	list-style: decimal;
+	list-style-position: inside;
+	font-size: 1rem;
+}
+
+code {
+	margin-left: 10px;
+	padding-left: 10px;
 }
