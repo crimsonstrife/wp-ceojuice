@@ -10,7 +10,7 @@ Author URI:   https://www.patrickbarnhardt.com
  * @Author: crimsonstrife
  * @Date: 2022-04-26 15:30:51
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 22:27:06
+ * @Last Modified time: 2022-04-27 20:44:25
 */
 
 // Settings Page: CEOJuice
@@ -70,6 +70,8 @@ class ceojuice_Settings_Page
             class="nav-tab <?php if ($tab === 'features') : ?>nav-tab-active<?php endif; ?>">Features</a>
         <a href="?page=ceojuice&tab=cache"
             class="nav-tab <?php if ($tab === 'cache') : ?>nav-tab-active<?php endif; ?>">Caching</a>
+        <a href="?page=ceojuice&tab=howto"
+            class="nav-tab <?php if ($tab === 'howto') : ?>nav-tab-active<?php endif; ?>">How To Use</a>
     </h2>
     <div class="tab-content">
         <?php
@@ -85,6 +87,9 @@ class ceojuice_Settings_Page
         <?php do_settings_fields('ceojuice', 'cache_section');
                         submit_button();
                         break;
+                    case 'howto': ?>
+        <?php require_once(CJ_PLUGIN_DIR . 'inc/howto.php'); ?>
+        <?php break;
                     default: ?>
         <h2>Set API Settings</h2>
         <?php do_settings_fields('ceojuice', 'ceojuice_section');
@@ -289,7 +294,7 @@ function replace_footer_admin()
     echo '<span>Net Promoter, NPS, and Net Promoter Score are trademarks of Satmetrix Systems, Inc., Bain & Company, and Fred Reichheld.</span><br />';
 }
 
-if ($pagenow == 'admin.php' && $_GET['page'] == 'ceojuice') {
+if ($pagenow == 'admin.php' && $_GET['page'] == 'ceojuice') { // only run this on the plugin settings page
     add_filter('admin_footer_text', 'replace_footer_admin');
 }
 
@@ -309,11 +314,44 @@ function add_featuresettingslink_admin_submenu()
 }
 add_action('admin_menu', 'add_featuresettingslink_admin_submenu');
 
-function add_cachesettingslink_admin_submenu()
+function add_cachesettingslink_admin_submenu() //adds a link to the cache settings page to the admin menu
 {
     global $submenu;
     $permalink = admin_url('admin.php?page=ceojuice') . '&tab=cache';
     $submenu['ceojuice'][] = array('Cache', 'manage_options', $permalink);
 }
 add_action('admin_menu', 'add_cachesettingslink_admin_submenu');
+
+function add_ceohowto_admin_submenu()
+{
+    global $submenu;
+    $permalink = admin_url('admin.php?page=ceojuice') . '&tab=howto';
+    $submenu['ceojuice'][] = array('How To Use', 'manage_options', $permalink);
+}
+add_action('admin_menu', 'add_ceohowto_admin_submenu');
+
+// Create Shortcode ceo_nps_score
+// Shortcode: [ceo_nps_score meter_style="default" display_type="full"]
+function create_ceonpsscore_shortcode($atts)
+{
+
+    // Attributes
+    $atts = shortcode_atts(
+        array(
+            'meter_style' => 'default',
+            'display_type' => 'full',
+        ),
+        $atts,
+        'ceo_nps_score'
+    );
+
+    // Attributes in var
+    $meter_style = $atts['meter_style'];
+    $display_type = $atts['display_type'];
+
+    // Your Code
+
+}
+add_shortcode('ceo_nps_score', 'create_ceonpsscore_shortcode');
+
 ?>
