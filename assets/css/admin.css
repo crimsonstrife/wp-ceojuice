@@ -3,7 +3,7 @@
  * @Author: crimsonstrife
  * @Date: 2022-04-26 22:28:51
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-27 09:04:52
+ * @Last Modified time: 2022-04-28 22:39:26
  */
 
 #navWrapper {
@@ -234,4 +234,135 @@
 code {
 	margin-left: 10px;
 	padding-left: 10px;
+}
+
+input[type="text"][required],
+input[type="number"][required] {
+	background-image: linear-gradient(
+		45deg,
+		transparent,
+		transparent 50%,
+		red 50%,
+		red 100%
+	);
+	background-position: top right;
+	background-size: 0.5em 0.5em;
+	background-repeat: no-repeat;
+}
+
+input[type="text"] + span,
+input[type="number"] + span {
+	padding-right: 30px;
+}
+
+input[type="text"]:invalid + span:after,
+input[type="number"]:invalid + span:after {
+	position: absolute;
+	content: "✖";
+	padding-left: 5px;
+}
+
+input[type="text"]:valid + span:after,
+input[type="number"]:valid + span:after {
+	position: absolute;
+	content: "✓";
+	padding-left: 5px;
+}
+
+.switchCtrl {
+	margin: 0;
+	padding: 0;
+	height: 18px;
+	cursor: pointer;
+}
+.switchCtrl.right-side {
+	float: right;
+}
+.switchCtrl.right-side + label.title {
+	float: right;
+}
+.switchCtrl + label.title {
+	font-weight: normal;
+	display: inline-block;
+	margin: 0;
+	cursor: pointer;
+}
+.switchCtrl + label.title::after {
+	content: " ";
+	white-space: pre;
+}
+.switchCtrl + label.title::before {
+	content: " ";
+	white-space: pre;
+}
+.switchCtrl input {
+	display: none;
+}
+.switchCtrl input:disabled + .toggle {
+	cursor: not-allowed;
+}
+.switchCtrl input:disabled + .toggle::before {
+	background-color: #e6e6e6;
+}
+.switchCtrl input:disabled + .toggle::after {
+	background-color: #e6e6e6;
+}
+.switchCtrl input:checked + .toggle::before {
+	background-color: seagreen;
+}
+.switchCtrl input:checked + .toggle::after {
+	-webkit-transform: translateX(20px);
+	-ms-transform: translateX(20px);
+	transform: translateX(20px);
+	background-color: seagreen;
+}
+.switchCtrl input:checked:disabled + .toggle::before {
+	background-color: #caeeda;
+}
+.switchCtrl input:checked:disabled + .toggle::after {
+	background-color: #caeeda;
+}
+.switchCtrl .toggle {
+	position: relative;
+	display: inline-block;
+	width: 40px;
+	height: 20px;
+	overflow: hidden;
+	vertical-align: top;
+}
+.switchCtrl .toggle::after {
+	content: "";
+	position: absolute;
+	width: 12px;
+	top: 4px;
+	left: 4px;
+	bottom: 4px;
+	display: inline-block;
+	-webkit-transition: 0.3s ease-in-out;
+	transition: 0.3s ease-in-out;
+	box-sizing: border-box;
+	border: 3px solid white;
+	background-color: #c0c0c0;
+}
+.switchCtrl .toggle::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	overflow: hidden;
+	background-color: #c0c0c0;
+	display: inline-block;
+	-webkit-transition: 0.3s;
+	transition: 0.3s;
+}
+.switchCtrl.rounded .toggle {
+	border-radius: 10px;
+}
+.switchCtrl.rounded .toggle::after {
+	border-radius: 50%;
+}
+.switchCtrl.rounded .toggle::before {
+	border-radius: 10px;
 }
