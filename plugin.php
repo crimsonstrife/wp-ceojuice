@@ -13,7 +13,7 @@ Text Domain:  ceoJuice-api
  * @Author: crimsonstrife
  * @Date: 2022-04-26 14:49:01
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-26 23:13:17
+ * @Last Modified time: 2022-04-28 12:15:54
  * @requires: PHP 7.3+
  * @requires: WP 5.9.0+
  * @requires: ID230 and ID125 on the CeoJuice API
@@ -136,6 +136,7 @@ function enqueuing_cjadmin_scripts($screen)
     wp_enqueue_style('cjbootstrapcs', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css', array(), '5.1.3');
     wp_enqueue_style('ceojuiceadmin', CJ_PLUGIN_URL . "assets/css/admin.min.css", array(), '1.0.0');
     wp_enqueue_script('cjbootstrapjs', 'https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js', array('jquery'), '5.1.3', true);
+    //wp_enqueue_script('angularadminjs', "https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.8/angular.min.js", array('jquery'), '1.5.8', true);
 }
 
 add_action('admin_enqueue_scripts', 'enqueuing_cjadmin_scripts');
