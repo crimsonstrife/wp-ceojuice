@@ -10,7 +10,7 @@ Author URI:   https://www.patrickbarnhardt.com
  * @Author: crimsonstrife
  * @Date: 2022-04-26 15:30:51
  * @Last Modified by: crimsonstrife
- * @Last Modified time: 2022-04-27 20:44:25
+ * @Last Modified time: 2022-04-29 14:51:14
 */
 
 // Settings Page: CEOJuice
@@ -62,7 +62,6 @@ class ceojuice_Settings_Page
     </nav>
 </div>
 <div class="wrap">
-    <?php settings_errors(); ?>
     <h2 class="nav-tab-wrapper">
         <a href="?page=ceojuice" class="nav-tab <?php if ($tab === null) : ?>nav-tab-active<?php endif; ?>">API
             Settings</a>
@@ -73,30 +72,102 @@ class ceojuice_Settings_Page
         <a href="?page=ceojuice&tab=howto"
             class="nav-tab <?php if ($tab === 'howto') : ?>nav-tab-active<?php endif; ?>">How To Use</a>
     </h2>
-    <div class="tab-content">
-        <?php
-                settings_fields('ceojuice');
-                switch ($tab):
-                    case 'features': ?>
-        <h2>Enable CEOJuice API Features</h2>
-        <?php do_settings_fields('ceojuice', 'features_section');
-                        submit_button();
-                        break;
-                    case 'cache': ?>
-        <h2>Set API Cache Settings</h2>
-        <?php do_settings_fields('ceojuice', 'cache_section');
-                        submit_button();
-                        break;
-                    case 'howto': ?>
-        <?php require_once(CJ_PLUGIN_DIR . 'inc/howto.php'); ?>
+    <div class="tab-content" ng-app="app">
+        <?php switch ($tab):
+                    case 'features':
+                        settings_fields('ceojuice'); ?>
+        <form method="post" action="options.php">
+            <table class="form-table" role="presentation">
+                <tbody>
+                    <tr>
+                        <th scope="row">
+                            <h2>Enable CEOJuice API Features</h2>
+                        </th>
+                        <td>
+                            <?php do_settings_fields('ceojuice', 'features_section'); ?>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </form>
+        <div class="submit-section">
+            <?php if ($tab != 'howto') {
+                                submit_button(); ?>
+            <div class="submit result">
+                <div class="submit-message">
+                    <?php settings_errors(); ?>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
         <?php break;
-                    default: ?>
-        <h2>Set API Settings</h2>
-        <?php do_settings_fields('ceojuice', 'ceojuice_section');
-                        submit_button();
-                        break;
+                    case 'cache':
+                        settings_fields('ceojuice'); ?>
+        <form method="post" action="options.php">
+            <tr>
+                <th scope="row">
+                    <h2>Set API Cache Settings</h2>
+                </th>
+                <td>
+                    <?php do_settings_fields('ceojuice', 'cache_section'); ?>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </form>
+        <div class="submit-section">
+            <?php if ($tab != 'howto') {
+                                submit_button(); ?>
+            <div class="submit result">
+                <div class="submit-message">
+                    <?php settings_errors(); ?>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+        <?php break;
+                    case 'howto': ?>
+        <?php require_once(CJ_PLUGIN_DIR . 'inc/howto.php');
+                        ?>
+        <?php break;
+                    default:
+                        settings_fields('ceojuice'); ?>
+        <form method="post" action="options.php">
+            <tr>
+                <th scope="row">
+                    <h2>Set API Settings</h2>
+                </th>
+                <td>
+                    <?php do_settings_fields('ceojuice', 'ceojuice_section'); ?>
+                </td>
+            </tr>
+            </tbody>
+            </table>
+        </form>
+        <div class="submit-section">
+            <?php if ($tab != 'howto') {
+                                submit_button(); ?>
+            <div class="submit result">
+                <div class="submit-message">
+                    <?php settings_errors(); ?>
+                </div>
+            </div>
+            <?php } ?>
+        </div>
+        <?php break;
                 endswitch; ?>
     </div>
+    <script type="text/javascript" id="checked-unchecked">
+    //Toggle the checked state of the checkbox switch
+    jQuery(document).ready(function() {
+        //If the .toggle span is clicked, add or remove the checked class from the checkbox input
+        jQuery('.toggle').click(function() {
+            jQuery(this).toggleClass('checked'); //toggle the checked class
+            jQuery(this).prev('input').prop('checked', !jQuery(this).prev('input').prop(
+                'checked')); //toggle the checked property of the input
+        });
+    });
+    </script>
 </div>
 <?php
     }
@@ -111,59 +182,47 @@ class ceojuice_Settings_Page
     {
         $fields = array(
             array(
-                'label' => 'CEOJuice Customer Number',
+                'label' => '*CEOJuice Customer Number',
                 'id' => 'ceoJuice_custNum',
-                'type' => 'text',
+                'type' => 'text-required',
                 'section' => 'ceojuice_section',
                 'desc' => 'Your CEOJuice Customer Number',
-                'placeholder' => 'ceo001',
+                'placeholder' => '(required)',
             ),
             array(
-                'label' => 'CEOJuice API Code',
+                'label' => '*CEOJuice API Code',
                 'id' => 'ceoJuice_apiCode',
-                'type' => 'text',
+                'type' => 'text-required',
                 'section' => 'ceojuice_section',
                 'desc' => 'Code required to request your data from the CEOJuice API',
-                'placeholder' => 'XXXXXXXXXXXXXXXXXXXXXXXX',
+                'placeholder' => '(required)',
             ),
             array(
                 'label' => 'Enable PHPfastCache',
                 'id' => 'ceoJuice_caching',
-                'type' => 'select',
+                'type' => 'checkbox',
                 'section' => 'cache_section',
-                'options' => array(
-                    'true' => 'On',
-                    'false' => 'Off',
-                ),
                 'desc' => 'Enable built-in caching for this plugin to reduce API calls',
-                'placeholder' => 'false',
-                'default' => 'false',
+                'placeholder' => 'true',
+                'style' => 'roundedswitch',
             ),
             array(
                 'label' => 'Enable NetPromoterScore (NPS&#174;)',
                 'id' => 'ceoJuice_enableNPS',
-                'type' => 'select',
+                'type' => 'checkbox',
                 'section' => 'features_section',
-                'options' => array(
-                    'false' => 'Off',
-                    'true' => 'On',
-                ),
                 'desc' => 'Enable the NPS API feature',
-                'placeholder' => 'Off',
-                'default' => 'Off',
+                'placeholder' => 'false',
+                'style' => 'roundedswitch',
             ),
             array(
                 'label' => 'Enable Favorite Testimonials',
                 'id' => 'ceoJuice_enableTestimonials',
-                'type' => 'select',
+                'type' => 'checkbox',
                 'section' => 'features_section',
-                'options' => array(
-                    'false' => 'Off',
-                    'true' => 'On',
-                ),
                 'desc' => 'Enable Testimonials API feature - You need to favorite a testimonial to pull it from the API',
-                'placeholder' => 'Off',
-                'default' => 'Off',
+                'placeholder' => 'false',
+                'style' => 'roundedswitch',
             ),
             array(
                 'label' => 'Cache Duration',
@@ -206,45 +265,111 @@ class ceojuice_Settings_Page
         }
         switch ($field['type']) {
             case 'number':
+                $dependency = '';
+                $required = '';
+                if (isset($field['dependency'])) {
+                    $dependency = $field['dependency'];
+                    $required = 'required';
+                }
                 if (!empty($field['min'])) {
                     printf(
-                        '<input type="number" name="%1$s" id="%1$s" value="%2$s" placeholder="%3$s" min="%4$s" max="%5$s" />',
+                        '<input type="number" name="%1$s" id="%1$s" value="%2$s" placeholder="%3$s" min="%4$s" max="%5$s" %6$s/>',
                         $field['id'],
                         $value,
                         $placeholder,
                         $field['min'],
-                        $field['max']
+                        $field['max'],
+                        $required,
                     );
                 } else {
                     printf(
-                        '<input type="number" name="%1$s" id="%1$s" value="%2$s" placeholder="%3$s" />',
+                        '<input type="number" name="%1$s" id="%1$s" value="%2$s" placeholder="%3$s" %4$s/>',
                         $field['id'],
                         $value,
-                        $placeholder
+                        $placeholder,
+                        $required,
                     );
                 }
+                break;
+            case 'checkbox':
+                $checked = '';
+                $class = '';
+                $label = '';
+                $after = '';
+                $value = $field['placeholder'];
+                if ($value === 'true') {
+                    $checked = 'checked';
+                }
+                if (isset($field['style'])) {
+                    switch ($field['style']) {
+                        case 'roundedswitch':
+                            $class = 'roundedswitch';
+                            $label = '<label for="cbSwitchRounded" class="switchCtrl rounded">';
+                            $after = '<span class="' . $field['id'] . ' toggle"></span></label>';
+                            break;
+                        default:
+                    }
+                }
+                printf(
+                    '%7$s<input %s id="%2$s" class="%2$s %5$s" name="%3$s" type="checkbox" value="%1$s" %4$s>%6$s',
+                    $value === '1' ? 'checked' : '', // checked?
+                    $field['id'],
+                    $field['id'],
+                    $checked,
+                    $class,
+                    $after,
+                    $label,
+                );
+                break;
             case 'radio':
                 if (!empty($field['options']) && is_array($field['options'])) {
-                    $options_markup = '';
                     $iterator = 0;
+                    $checked = '';
                     foreach ($field['options'] as $key => $label) {
                         $iterator++;
-                        $options_markup .= sprintf(
+                        if ($field['placeholder'] == $key) {
+                            $checked = 'checked';
+                        } else {
+                            $checked = '';
+                        }
+                        printf(
                             '<label for="%1$s_%6$s"><input id="%1$s_%6$s" name="%1$s" type="%2$s" value="%3$s" %4$s /> %5$s</label><br/>',
                             $field['id'],
                             $field['type'],
                             $key,
-                            checked($value, $key, false),
+                            $checked,
                             $label,
-                            $iterator
+                            $iterator,
+                        );
+                    }
+                }
+                break;
+            case 'select':
+                if (!empty($field['options']) && is_array($field['options'])) {
+                    $options_markup = '';
+                    $iterator = 0;
+                    $checked = '';
+                    foreach ($field['options'] as $key => $label) {
+                        $iterator++;
+                        if ($field['placeholder'] == $key) {
+                            $checked = 'selected';
+                        } else {
+                            $checked = '';
+                        }
+                        $options_markup .= sprintf(
+                            '<option value="%1$s" %2$s>%3$s</option>',
+                            $key,
+                            $checked,
+                            $label,
                         );
                     }
                     printf(
-                        '<fieldset>%s</fieldset>',
+                        '<select name="%1$s" id="%1$s">%2$s</select>',
+                        $field['id'],
                         $options_markup
                     );
                 }
-            case 'select':
+                break;
             case 'multiselect':
                 if (!empty($field['options']) && is_array($field['options'])) {
                     $attr = '';
@@ -267,6 +392,14 @@ class ceojuice_Settings_Page
                         $options
                     );
                 }
+                break;
+            case 'text-required':
+                printf(
+                    '<input type="text" name="%1$s" id="%1$s" value="%2$s" size="45" maxlength="50" placeholder="%3$s" required /><span class="validity"></span>',
+                    $field['id'],
+                    $value,
+                    $placeholder
+                );
                 break;
             default:
                 printf(
@@ -352,6 +485,4 @@ function create_ceonpsscore_shortcode($atts)
     // Your Code
 
 }
-add_shortcode('ceo_nps_score', 'create_ceonpsscore_shortcode');
-
-?>
+add_shortcode('ceo_nps_score', 'create_ceonpsscore_shortcode'); ?>
